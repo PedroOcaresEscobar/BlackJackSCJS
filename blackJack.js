@@ -9,47 +9,49 @@
  sumaJugador > 21,  sumaJugador > sumaRepartidor.
 
 Se solicita que se  trabajen variables, constantes, arreglos, control de ciclo, funciones que se utilicen prompt, confirm y alert
-si bien se reutilizo código mostrado en clases, se crearon 4 funciones adicionales para controlar las reglas del nuevo juego
-las cuales contienen todo lo mencionado anteriormente en lo solicitado.
+si bien se reutilizo código mostrado en clases, se crearon 5 funciones adicionales para controlar las reglas del nuevo juego
+las cuales contienen todo lo mencionado anteriormente en lo solicitado, supuestamente.
 
 */
+//declaramos constante numPlayers serán los números de jugadores se muestra con una mensaje prompt 
 const numPlayers = parseInt(prompt(`Elija jugadores:\n(1) Dealer vs 1\n(2) Dealer vs 2\n(3) Dealer vs 3\n(4) Dealer vs 4\n(5) Dealer vs 5\n(6) Dealer vs 6`));
-let deck = [];
-const suits = ["Picas", "Tréboles", "Corazones", "Diamante"];
-let playerHands = [];
-const ranks = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+let deck = [];//declaramos la variable.array deck el cual almacenara las cartas
+const suits = ["Picas", "Tréboles", "Corazones", "Diamante"]; //declaramos constante suits con los "palos" de las cartas "Picas", "Tréboles", "Corazones", "Diamante"
+let playerHands = [];//declaramos la variable.array playerHands para las manos de las jugadores o sea las cartas que tendrá cada uno
+const ranks = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];//declaramos la constante.array ranks con los valores "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
 
+//funcion createDeck para crear el mazo mezclando los valores de "{ranks} de {suit}"
 function createDeck() {
-    for (let suit of suits) {
-        for (let rank of ranks) {
-            deck.push({ rank: rank, suit: suit });
+    for (let suit of suits) {// ciclo for, creamos variable suit con los elementos de suits
+        for (let rank of ranks) {//ciclo for creamos variable rank con elementos de ranks
+            deck.push({ rank: rank, suit: suit });//con push() agregamos al deck rank y suit en ese orden o sea el numero y luego el palo
         }
     }
 }
-
+//funcion para revolver las cartas 
 function shuffleDeck() {
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
+    for (let i = deck.length - 1; i > 0; i--) {//ciclo for que lee el margo de elementos del deck -1 ya que queremos indicar el indice y este siempre es el numero de elementos -1 porque el indice empieza desde 0
+        const j = Math.floor(Math.random() * (i + 1));//se crea constante j para almacenar un numero random entre 0 y i+1
+        [deck[i], deck[j]] = [deck[j], deck[i]];//aca se hace un array para hcer un intercambio dentro de este mismo es como decir el puesto de la carta 10(i) ahora la ocupa la carta 3(j) 
     }
 }
-
+//funcion para repartir cartas en el numero de jugadores que se han seleccionado
 function dealCards(numPlayers) {
-    // Inicializar la mano del dealer
+    //creamos la constante dealerHand y la asignamos un array 
     const dealerHand = [];
-    // Repartir cartas a los jugadores
+    // Repartimos cartas a los jugadores
     for (let i = 0; i < numPlayers; i++) {
-        const hand = [];
+        const hand = [];//creamos constante.array hand
         for (let j = 0; j < 2; j++) {
-            hand.push(deck.pop());
+            hand.push(deck.pop());//se le agregan las cartas que se eliminan del deck con la funcion pop() a hand con la funcion push()
         }
-        playerHands.push(hand);
+        playerHands.push(hand);//ahora los elementos de hand se los agregamos a playerHands
     }
-    // Repartir cartas al dealer
+    // Repartimos cartas al dealer
     for (let j = 0; j < 2; j++) {
         dealerHand.push(deck.pop());
     }
-    // Agregar la mano del dealer a playerHands
+    // Agregamos la mano del dealer a playerHands
     playerHands.push(dealerHand);
 }
 
@@ -136,9 +138,7 @@ function cantidadJugadores(numPlayers){
 createDeck();
 //llamamos a la function shuffleDeck que es para revolver las cartas del mazo, cambiar el orden. 
 shuffleDeck();
-
-//creamos una constante numPlayer para saber cuantos jugadores tendrá el juego
-
+//funcion para confirmar la cantidad de Jugadores
 cantidadJugadores(numPlayers);
 //llamamos a la function printJugadores que imprime los jugadores por consola
 printJugadores();
